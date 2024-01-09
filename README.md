@@ -4,6 +4,10 @@
 <br>
 <br>
 
+## with TextView
+1. [StyledTextExtension](https://github.com/myung6024/Utility/tree/main/utils/StyledText)
+<br>
+
 ## with RecyclerView
 1. [BaseListAdapter](https://github.com/myung6024/Utility/tree/main/utils/BaseListAdapter)
 2. [StartSnapHelper](https://github.com/myung6024/Utility/tree/main/utils/StartSnapHelper)
