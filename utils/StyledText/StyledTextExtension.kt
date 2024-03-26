@@ -5,14 +5,29 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View
 import androidx.annotation.ColorInt
+import com.vinulabs.shared.ui.util.Style.BOLD
+import com.vinulabs.shared.ui.util.Style.UNDERLINE
+import com.vinulabs.shared.ui.util.StyledTextOption.Companion.STYLE_BOLD
+import com.vinulabs.shared.ui.util.StyledTextOption.Companion.STYLE_UNDERLINE
+import com.vinulabs.shared.util.PatternUtils
 import java.util.regex.Pattern
 
 data class StyledTextOption(
     @ColorInt val textColor: Int,
-    val isBold: Boolean = false,
-    val isUnderline: Boolean = false,
+    val style: Int = 0,
     val onClick: (() -> Unit)? = null
-)
+) {
+    companion object {
+        const val STYLE_NONE = 0
+        const val STYLE_BOLD = 1
+        const val STYLE_UNDERLINE = 2
+    }
+}
+
+private enum class Style(val attrValue: Int) {
+    BOLD(STYLE_BOLD),
+    UNDERLINE(STYLE_UNDERLINE)
+}
 
 private data class MatchData(
     val range: IntRange,
@@ -23,7 +38,7 @@ private data class MatchData(
 fun String.setStyledText(
     vararg options: StyledTextOption
 ): SpannableStringBuilder {
-    val spannableText = SpannableStringBuilder(this)
+    val spannableText = SpannableStringBuilder(PatternUtils.replaceHtml(this))
     val matchDataList = mutableListOf<MatchData>()
 
     var regexIndex = 1
@@ -56,11 +71,16 @@ fun String.setStyledText(
         val urlTagSpan: ClickableSpan = object : ClickableSpan() {
             override fun updateDrawState(textPaint: TextPaint) {
                 textPaint.color = data.option.textColor
-                if (data.option.isBold) {
-                    textPaint.typeface = Typeface.DEFAULT_BOLD
-                }
-                if (data.option.isUnderline) {
-                    textPaint.isUnderlineText = true
+
+                var styleOptionInt = data.option.style
+                Style.values().reversed().forEach {
+                    if (styleOptionInt >= it.attrValue) {
+                        styleOptionInt -= it.attrValue
+                        when (it) {
+                            BOLD -> textPaint.typeface = Typeface.DEFAULT_BOLD
+                            UNDERLINE -> textPaint.isUnderlineText = true
+                        }
+                    }
                 }
             }
 
