@@ -5,11 +5,6 @@ import android.text.TextPaint
 import android.text.style.ClickableSpan
 import android.view.View
 import androidx.annotation.ColorInt
-import com.vinulabs.shared.ui.util.Style.BOLD
-import com.vinulabs.shared.ui.util.Style.UNDERLINE
-import com.vinulabs.shared.ui.util.StyledTextOption.Companion.STYLE_BOLD
-import com.vinulabs.shared.ui.util.StyledTextOption.Companion.STYLE_UNDERLINE
-import com.vinulabs.shared.util.PatternUtils
 import java.util.regex.Pattern
 
 data class StyledTextOption(
