@@ -5,7 +5,7 @@
 <br>
 
 ## with TextView
-1. [StyledTextExtension](https://github.com/myung6024/Utility/tree/main/utils/StyledText)
+1. [HighlightColorTextView](https://github.com/myung6024/Utility/tree/main/utils/StyledText)
 <br>
 
 ## with RecyclerView
